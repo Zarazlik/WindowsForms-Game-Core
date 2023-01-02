@@ -1,7 +1,8 @@
 using System.ComponentModel;
 using System.Diagnostics;
-
+using PetriaChivilisation.FPS;
 using PetriaChivilisation.Game;
+using PetriaChivilisation.Viewing;
 
 namespace PetriaChivilisation
 {
@@ -11,13 +12,11 @@ namespace PetriaChivilisation
         TileMap map;
         GameLogic Logic;
 
-        int MaxFPS = 0, MinFPS = 1000;
-        int FPScount;
+        FpsWindow FpsWindow;
+        byte FpsCount;
         long LogicTime;
 
         static List<Vector> ChaingesCells;
-
-        Stopwatch stopwatch = new Stopwatch();
 
         public CoreForm()
         {
@@ -30,10 +29,12 @@ namespace PetriaChivilisation
             Display.LoadMap();
 
             Logic = new GameLogic(map);
+            FpsWindow = new FpsWindow();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
             FpsLimiter.Start();
             FpsCounterTimer.Start();
         }
@@ -45,34 +46,25 @@ namespace PetriaChivilisation
 
         private void FpsCounterTimer_Tick(object sender, EventArgs e)
         {
-            FpsLabel2.Text = FPScount.ToString();
-
-            if (FPScount > MaxFPS)
-            {
-                MaxFPS = FPScount;
-                MaxFpsLable2.Text = MaxFPS.ToString();
-            }
-            else if (FPScount < MinFPS)
-            {
-                MinFPS = FPScount;
-                MinFpsLable2.Text = MinFPS.ToString();
-            }
-            FPScount = 0;
-
-            LogicLabel2.Text = LogicTime.ToString();
+            FpsWindow.Update(FpsCount, LogicTime);
+            FpsCount = 0;
             LogicTime = 0;
         }
 
         async public void FrameUpdate()
         {
+            (ChaingesCells, long ms ) = await Task.Run(Logic.Frame);
 
-            (ChaingesCells, long nans ) = await Task.Run(Logic.Frame);
-
-            LogicTime += nans;
+            LogicTime += ms;
 
             Display.Update(ChaingesCells);
 
-            FPScount++;
+            FpsCount++;
+        }
+
+        private void fPSControlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FpsWindow.Show();
         }
     }
 }
