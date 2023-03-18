@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace PetriaChivilisation.Game
 {
     public class TileMap
     {
-        public Vector Size;
+        public Point Size;
         public ITile[,] map;
 
         public TileMap()
@@ -20,7 +21,7 @@ namespace PetriaChivilisation.Game
         {
             Bitmap manualmap = new Bitmap(path);
 
-            Size = new Vector((short)manualmap.Width, (short)manualmap.Height);
+            Size = new Point((short)manualmap.Width, (short)manualmap.Height);
             map = new ITile[Size.X, Size.Y];
 
             for (short x = 0; x < Size.X; x++)

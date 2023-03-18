@@ -1,44 +1,50 @@
-﻿using System;
+﻿using PetriaChivilisation.Game;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PetriaChivilisation.Game;
+using WinForms_GameCore.EngineCore;
 
-namespace PetriaChivilisation
+namespace WinForms_GameCore.Game
 {
-    public class Display
+    internal class Camera_2DCell : ICamera
     {
-        static Vector BitmapSize;
+        public PictureBox PictureBox { get; set; }
+        TileMap TileMap;
+        Bitmap bitmap;
 
-        public TileMap TileMap;
-        public PictureBox pictureBox;
-        public static Bitmap bitmap;
-        
-        public Display(TileMap TileMap, PictureBox pictureBox)
-        {
+        static Point BitmapSize;
+
+        public Camera_2DCell(PictureBox PictureBox, TileMap TileMap) 
+        { 
             this.TileMap = TileMap;
             short x = (short)(TileMap.Size.X * 5);
             short y = (short)(TileMap.Size.Y * 5);
 
-            this.pictureBox = pictureBox;
-            pictureBox.Size = new Size(x + 1, y + 1);
-            this.pictureBox.WaitOnLoad = false;
+            this.PictureBox = PictureBox;
+            PictureBox.Size = new Size(x + 1, y + 1);
+            this.PictureBox.WaitOnLoad = false;
 
-            BitmapSize = new Vector((short)(x + 1), (short)(y + 1));
+            BitmapSize = new Point((short)(x + 1), (short)(y + 1));
             bitmap = new Bitmap(BitmapSize.X, BitmapSize.Y);
         }
 
-        public void Update(List<Vector> ChanegesCells)
+        void ICamera.MakeFrame()
         {
-            foreach (var vector in ChanegesCells)
+            Grid();
+
+            for (short x = 0; x < TileMap.Size.X; x++)
             {
-                FillCell(vector);
+                for (short y = 0; y < TileMap.Size.Y; y++)
+                {
+                    FillCell(new Point(x, y));
+                }
             }
 
-            pictureBox.Image = bitmap;
+            PictureBox.Image = bitmap;
         }
 
         public void LoadMap()
@@ -49,14 +55,15 @@ namespace PetriaChivilisation
             {
                 for (short y = 0; y < TileMap.Size.Y; y++)
                 {
-                    FillCell(new Vector(x, y));
+                    FillCell(new Point(x, y));
                 }
             }
 
-            pictureBox.Image = bitmap;
-        }
+            PictureBox.Image = bitmap;
 
-        public void Grid()
+            
+        }
+        void Grid()
         {
             Color CellColor = Color.FromArgb(220, 220, 220);
 
@@ -77,11 +84,11 @@ namespace PetriaChivilisation
             }
         }
 
-        public void FillCell(Vector Cell)
+        public void FillCell(Point Cell)
         {
-            Vector CellPosition = new Vector((short)(Cell.X * 5), (short)(Cell.Y * 5));
-            
-            for (short x = 0 ; x < 4; x++)
+            Point CellPosition = new Point((short)(Cell.X * 5), (short)(Cell.Y * 5));
+
+            for (short x = 0; x < 4; x++)
             {
                 for (short y = 0; y < 4; y++)
                 {
