@@ -1,3 +1,5 @@
+using WinForms_GameCore;
+
 namespace PetriaChivilisation
 {
     internal static class Program
@@ -11,7 +13,7 @@ namespace PetriaChivilisation
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new CoreForm());
+            Application.Run(new MainWindow());
         }
     }
 }

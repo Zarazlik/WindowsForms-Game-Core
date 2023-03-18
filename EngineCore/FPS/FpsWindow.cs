@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using PetriaChivilisation.Viewing;
+using WinForms_GameCore.EngineCore.FPS;
 
 namespace PetriaChivilisation.FPS
 {
@@ -17,6 +16,7 @@ namespace PetriaChivilisation.FPS
         int MaxFPS = 0, MinFPS = 1000;
         int FpsCount;
         long LogicTime;
+        long RenderingTime;
 
         Chart chart;
 
@@ -30,10 +30,11 @@ namespace PetriaChivilisation.FPS
             FpsesMinute = new byte[60];
         }
 
-        async public void Update(byte FpsCount, long LogicTime)
+        async public void Update(byte FpsCount, long LogicTime, long RenderingTime)
         {
             this.FpsCount = FpsCount;
             this.LogicTime = LogicTime;
+            this.RenderingTime = RenderingTime;
 
             AddToFpses(FpsCount);
             chart.Update(FpsesMinute);
@@ -56,6 +57,7 @@ namespace PetriaChivilisation.FPS
         {
             FpsLabel2.Text = FpsCount.ToString();
             LogicLabel2.Text = LogicTime.ToString();
+            RenderingLable2.Text = RenderingTime.ToString();
         }
 
         void AllTime()

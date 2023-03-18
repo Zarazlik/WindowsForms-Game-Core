@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PetriaChivilisation.Game;
 
-namespace PetriaChivilisation.Viewing;
+namespace WinForms_GameCore.Game;
 
-public class Display
+public class Camera_2DCell_2
 {
-    static Vector BitmapSize;
+    static Point BitmapSize;
 
     public TileMap TileMap;
     public PictureBox pictureBox;
     public static Bitmap bitmap;
-    
-    public Display(TileMap TileMap, PictureBox pictureBox)
+
+    public Camera_2DCell_2(TileMap TileMap, PictureBox pictureBox)
     {
         this.TileMap = TileMap;
         short x = (short)(TileMap.Size.X * 5);
@@ -27,15 +27,15 @@ public class Display
         pictureBox.Size = new Size(x + 1, y + 1);
         this.pictureBox.WaitOnLoad = false;
 
-        BitmapSize = new Vector((short)(x + 1), (short)(y + 1));
+        BitmapSize = new Point((short)(x + 1), (short)(y + 1));
         bitmap = new Bitmap(BitmapSize.X, BitmapSize.Y);
     }
 
-    public void Update(List<Vector> ChanegesCells)
+    public void Update(List<Point> ChanegesCells)
     {
-        foreach (var vector in ChanegesCells)
+        foreach (var Point in ChanegesCells)
         {
-            FillCell(vector);
+            FillCell(Point);
         }
 
         pictureBox.Image = bitmap;
@@ -49,7 +49,7 @@ public class Display
         {
             for (short y = 0; y < TileMap.Size.Y; y++)
             {
-                FillCell(new Vector(x, y));
+                FillCell(new Point(x, y));
             }
         }
 
@@ -77,11 +77,11 @@ public class Display
         }
     }
 
-    public void FillCell(Vector Cell)
+    public void FillCell(Point Cell)
     {
-        Vector CellPosition = new Vector((short)(Cell.X * 5), (short)(Cell.Y * 5));
-        
-        for (short x = 0 ; x < 4; x++)
+        Point CellPosition = new Point((short)(Cell.X * 5), (short)(Cell.Y * 5));
+
+        for (short x = 0; x < 4; x++)
         {
             for (short y = 0; y < 4; y++)
             {

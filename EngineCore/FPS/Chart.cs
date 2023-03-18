@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
-namespace PetriaChivilisation.Viewing
+namespace WinForms_GameCore.EngineCore.FPS
 {
     internal class Chart
     {
@@ -45,12 +45,12 @@ namespace PetriaChivilisation.Viewing
 
             for (int i = 0; i < Values.Length; i++)
             {
-                Points[i] = new Point(PolesPositions[i] + MinIndent, (int)(PictureBox.Height - (Values[i] * factor)) - (MinIndent + 1));
+                Points[i] = new Point(PolesPositions[i] + MinIndent, (int)(PictureBox.Height - Values[i] * factor) - (MinIndent + 1));
             }
 
             Image image = DrawChartLine(Color.Red, Points);
             PictureBox.Image = image;
-            
+
         }
 
         void DrawGread()
@@ -71,10 +71,9 @@ namespace PetriaChivilisation.Viewing
                 for (int i = 0; i < NumberOfPoles; i++)
                 {
                     graphics.DrawLine(
-                        pen, 
-                        new Point((int)(i * VerticalLinesStep + MinIndent), MinIndent), 
-                        new Point((int)(i * VerticalLinesStep + MinIndent), PictureBox.Height - (MinIndent + 1))
-                        );
+                        pen,
+                        new Point((int)(i * VerticalLinesStep + MinIndent), MinIndent),
+                        new Point((int)(i * VerticalLinesStep + MinIndent), PictureBox.Height - (MinIndent + 1)));
 
                     PolesPositions[i] = (ushort)(i * VerticalLinesStep + IndentX);
                 }
@@ -82,8 +81,8 @@ namespace PetriaChivilisation.Viewing
                 for (int i = 0; i <= HorisontalLiens; i++)
                 {
                     graphics.DrawLine(
-                        pen, 
-                        new Point(MinIndent, (int)(i * HorisontallLinesStep + MinIndent)), 
+                        pen,
+                        new Point(MinIndent, (int)(i * HorisontallLinesStep + MinIndent)),
                         new Point(PictureBox.Width - (MinIndent + 1), (int)(i * HorisontallLinesStep + MinIndent)));
                 }
             }
@@ -91,7 +90,7 @@ namespace PetriaChivilisation.Viewing
             PictureBox.Image = Table;
         }
 
-        
+
         Image DrawChartLine(Color color, Point[] points)
         {
             Image image = Table.Clone() as Image;
@@ -106,6 +105,6 @@ namespace PetriaChivilisation.Viewing
 
             return image;
         }
-        
+
     }
 }
