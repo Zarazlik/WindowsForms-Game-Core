@@ -21,7 +21,7 @@ namespace WinForms_GameCore.EngineCore
         long LogicTime;
         long RenderingTime;
 
-        public virtual ICamera Camera { get; set; }
+        internal virtual ICamera Camera { get; set; }
 
         internal EngineLogic(CoreForm CoreForm)
         {

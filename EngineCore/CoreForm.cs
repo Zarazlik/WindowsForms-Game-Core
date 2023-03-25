@@ -10,7 +10,7 @@ namespace WinForms_GameCore.EngineCore
 {
     public partial class CoreForm : Form
     {
-        GameLogic Logic;
+        internal GameLogic Logic;
         public FpsWindow FpsWindow;
 
         public CoreForm()
@@ -34,6 +34,11 @@ namespace WinForms_GameCore.EngineCore
         internal void LoadGame()
         {
             Logic.LoadGame();
+        }
+
+        internal void PauseLogic()
+        {
+            FpsLimiter.Stop();
         }
 
         internal void StartGame()

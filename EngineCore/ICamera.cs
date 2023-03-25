@@ -11,5 +11,6 @@ namespace WinForms_GameCore.EngineCore
         PictureBox PictureBox { get; set; }
 
         public void MakeFrame();
+        public void Resize();
     }
 }
