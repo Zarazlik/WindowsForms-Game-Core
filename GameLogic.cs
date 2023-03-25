@@ -13,35 +13,36 @@ namespace WinForms_GameCore
 {
     internal class GameLogic : EngineLogic
     {
-        TileMap map;
-        Point Now;
+        TileGameWorld World;
+
+        Point Now = new Point();
 
         public GameLogic(CoreForm coreForm) : base(coreForm) { }
 
         public override void LoadGame()
         {
-            map = new TileMap();
-            map.ReadManualMap("C:\\Users\\Zaraz\\OneDrive\\Рабочий стол\\Карта2.png");
+            World = new TileGameWorld().GetLandscapeFromBitmap(Properties.Resources.DeafulMap);
 
-            Camera = new Camera_2DCell(CoreForm.MainDisplay, map);
+            Camera = new Camera_2DTilemap(CoreForm.MainDisplay, World, new Point(0,0), new Point(50,50));
         }
 
         public override void Update()
         {
             Now.X ++;
-            if (Now.X == map.Size.X)
+            if (Now.X == World.Size.X)
             {
                 Now.X = 0;
                 Now.Y++;
             }
-            if (Now.Y == map.Size.Y)
+            if (Now.Y == World.Size.Y)
             {
                 Now.Y = 0;
             }
 
-            if (map.map[Now.X, Now.Y] is Water)
+            if (World.Landscape[Now.X, Now.Y] is Water)
             {
-                map.map[Now.X, Now.Y] = new Mountains();
+                World.Landscape[Now.X, Now.Y] = new Mountains();
+                World.NeedRender[Now.X, Now.Y] = true;
             }
         }
     }

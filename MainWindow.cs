@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using PetriaChivilisation.FPS;
 
 namespace WinForms_GameCore
 {
@@ -18,7 +9,16 @@ namespace WinForms_GameCore
             InitializeComponent();
             LoadGame();
             StartGame();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
             FpsWindow.Show();
+        }
+
+        private void MainWindow_Resize(object sender, EventArgs e)
+        {
+            Logic.Camera.Resize();
         }
     }
 }

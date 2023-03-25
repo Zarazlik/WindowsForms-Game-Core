@@ -63,9 +63,9 @@ namespace WinForms_GameCore.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Карта2 {
+        internal static System.Drawing.Bitmap DeafulMap {
             get {
-                object obj = ResourceManager.GetObject("Карта2", resourceCulture);
+                object obj = ResourceManager.GetObject("DeafulMap", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
